@@ -1,8 +1,8 @@
 # GitHub Workflow Run Deleter
 
-[![Open Source](https://img.shields.io/badge/Open%20Source-Yes-brightgreen?style=for-the-badge)](https://github.com/SANDRO00O/workflow-run-deleter)
+[![Open Source](https://img.shields.io/badge/Open%20Source-Yes-brightgreen?style=for-the-badge)](https://github.com/SANDRO00O/Workflow-Run-Deleter)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
-[![Stars](https://img.shields.io/github/stars/SANDRO00O/workflow-run-deleter?style=for-the-badge&logo=github)](https://github.com/SANDRO00O/workflow-run-deleter/stargazers)
+[![Stars](https://img.shields.io/github/stars/SANDRO00O/workflow-run-deleter?style=for-the-badge&logo=github)](https://github.com/SANDRO00O/Workflow-Run-Deleter/stargazers)
 
 <img src="assets/img/logo.svg" alt="GitHub Workflow Run Deleter logo" width="100%" />
 
