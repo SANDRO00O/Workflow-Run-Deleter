@@ -440,6 +440,7 @@
             max-width: 500px;
             transform: translateY(-20px);
             transition: transform 0.3s ease;
+            border: 1px solid var(--danger);
         }
         
         .modal-overlay.show .modal-dialog {
