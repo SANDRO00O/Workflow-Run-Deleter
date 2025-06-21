@@ -8,6 +8,8 @@
 
 A secure and straightforward web tool for managing and deleting **GitHub Actions** workflow run history from your repositories. Easily clean up accumulated run histories, especially in high-activity repositories.
 
+# Try it
+
 ### [**Live Demo**]([https://sandro00o.github.io/Workflow-Run-Deleter]) 
 
 ---
