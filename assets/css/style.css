@@ -21,6 +21,7 @@
         }
         
         body {
+            font-size: 18px;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: var(--bg-dark);
             color: var(--text);
@@ -30,6 +31,7 @@
             line-height: 1.6;
         }
         
+
         .container {
             max-width: 1000px;
             margin: 0 auto;
