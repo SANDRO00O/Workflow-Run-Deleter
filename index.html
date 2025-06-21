@@ -25,13 +25,14 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: var(--bg-dark);
             color: var(--text);
             min-height: 100vh;
+            width: 100%;
             padding: 20px;
             line-height: 1.6;
         }
@@ -261,10 +262,49 @@
         }
         
         .footer {
+            font-family: monospace;
             text-align: center;
-            margin-top: 40px;
-            color: var(--text-secondary);
+            width: 100%;
+            padding: 20px;
+            margin-top: 30px;
+            background: var(--bg-dark);
+            border-top: 1px solid var(--primary-dark);
             font-size: 0.9rem;
+            font-size: calc(0.8rem / 1.618);
+        }
+        
+        .footer .onep {
+            font-size: 0.8rem;
+        }
+        
+        .footer .contact {
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #5A65D9;
+        }
+        
+        .footer .contact span {
+            margin-left: 5px;
+            margin-right: 5px;
+            color: #fff;
+        }
+        
+        .version {
+            color: #5A65D9;
+            font-weight: 400;
+        }
+        
+        a {
+            color: #5A65D9;
+            font-weight: 600;
+        }
+        
+        a:hover {
+            color: #3e44b8;
         }
         
         .progress-container {
@@ -401,7 +441,6 @@
             padding: 30px;
             width: 90%;
             max-width: 500px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             transform: translateY(-20px);
             transition: transform 0.3s ease;
         }
@@ -564,12 +603,18 @@
                 </div>
             </div>
             
-
+            <div id="FailedContainer" class="hidden">
+                <div class="empty-state">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3><span id="Failedh1"></span></h3>
+                    <p><span id="Failedp"></span></p>
+                </div>
+            </div>
             
             <!-- Loading state -->
             <div id="loadingIndicator" class="loading hidden">
                 <div class="spinner"><img class="mona" src="faild.gif" alt="">
-                    <p>loading...</p>
+                    <p>one moment please...</p>
                 </div>
                 
                 <div class="progress-container">
@@ -597,13 +642,18 @@
                 <div id="runsContainer"></div>
             </div>
         </div>
-        
-        <div class="footer">
-            <p>Note: Deleted workflow runs cannot be recovered. Use with caution.</p>
-            <p>This tool runs entirely in your browser - your GitHub token never leaves your device.</p>
-            <p>© 2024 GitHub Workflow Run Deleter</p>
-        </div>
     </div>
+    <footer class="footer">
+        <p class="onep">Developed by <strong><a href="https://karrarnazim.netlify.app">Karrar Nazim</a></strong> </p>
+        <div class="contact">
+            <a href="https://github.com/SANDRO00O/workflow-run-deleter" target="_blank" rel="noopener">open source</a>
+            <span> | </span>
+            <a href="https://github.com/SANDRO00O" target="_blank" rel="noopener">Github</a>
+            <span> | </span>
+            <a href="https://karrarnazim.netlify.app" target="_blank" rel="noopener">Contact</a>
+        </div>
+        <p> GitHub Workflow Run Deleter <span class="version">v1.0</span></p>
+    </footer>
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -615,6 +665,9 @@
             const fetchBtn = document.getElementById('fetchBtn');
             const runsContainer = document.getElementById('runsContainer');
             const resultsContainer = document.getElementById('resultsContainer');
+            const FailedContainer = document.getElementById('FailedContainer');
+            const Failedtext = document.getElementById('Failedp');
+            const Failedtitle = document.getElementById('Failedh1');
             const resultsList = document.getElementById('resultsList');
             const loadingIndicator = document.getElementById('loadingIndicator');
             const successContainer = document.getElementById('successContainer');
@@ -717,7 +770,7 @@
                     const randomIndex = Math.floor(Math.random() * satiricalMessages.length);
                     satiricalMessage.textContent = satiricalMessages[randomIndex];
                     satiricalMessage.style.display = 'block';
-                }, 2000); // Show after 2 seconds of loading
+                }, 10000); // Show after 10 seconds of loading
             }
             
             // Hide satirical message
@@ -740,6 +793,7 @@
                 // Show loading, hide others
                 toggleElement('successContainer', false);
                 toggleElement('resultsContainer', false);
+                toggleElement('FailedContainer', false);
                 toggleElement('loadingIndicator', true);
                 toggleElement('resultsList', false);
                 fetchProgressBar.style.width = '0%';
@@ -768,6 +822,9 @@
                     if (runs.length === 0) {
                         toggleElement('resultsContainer', true);
                         showToast('No workflow runs found for this repository', 'info');
+                        Failedtitle.textContent = 'nothing';
+                        Failedtext.textContent = 'No workflow runs found for this repository';
+                        toggleElement('FailedContainer', true);
                     } else {
                         displayRuns(runs);
                         toggleElement('resultsList', true);
@@ -775,6 +832,9 @@
                 } catch (error) {
                     console.error('Error:', error);
                     showToast(`Failed to fetch workflow runs: ${error.message}`, 'error');
+                    Failedtitle.textContent = 'Failed to fetch workflow runs';
+                    Failedtext.textContent = error.message;
+                    toggleElement('FailedContainer', true);
                     hideSatiricalMessage();
                 } finally {
                     toggleElement('loadingIndicator', false);
