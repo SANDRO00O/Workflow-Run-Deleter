@@ -111,5 +111,5 @@ Licensed under the MIT License. See `LICENSE`.
 ---
 
 <p align="center">
-  Built with ♥ by <a href="https://karrarnazim.netlify.app"><strong>Karrar Nazim</strong></a>
+  Built with hate by <a href="https://karrarnazim.netlify.app"><strong>Karrar Nazim</strong></a>
 </p>
