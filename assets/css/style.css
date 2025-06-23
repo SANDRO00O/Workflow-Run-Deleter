@@ -254,9 +254,14 @@
             display: flex;
             justify-content: flex-start;
             margin-bottom: 20px;
+            align-items: left !important
         }
         
-        .footer {
+        strong{
+            color: var(--primary)
+        }
+        
+        .footer, .footer2{
             font-family: monospace;
             text-align: center;
             width: 100%;

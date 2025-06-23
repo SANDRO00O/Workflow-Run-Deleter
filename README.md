@@ -113,5 +113,5 @@ This project is licensed under the MIT License. See the `LICENSE` file for more 
 ---
 
 <p align="center">
-  Developed with ❤️ by <strong><a href="https://karrarnazim.netlify.app">Karrar Nazim</a></strong>
+  Developed with hate by <strong><a href="https://karrarnazim.netlify.app">Karrar Nazim</a></strong>
 </p>
