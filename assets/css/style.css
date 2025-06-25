@@ -1,17 +1,20 @@
-        :root {
-            --bg-dark: rgba(10, 7, 15, 1);
-            --card-bg: #000;
-            --primary: #bb86fc;
-            --primary-dark: #9a67cf;
-            --primary-darker: rgba(29, 18, 44, 1);
-            --text: #e0e0e0;
-            --text-secondary: #a0a0a0;
-            --danger: #cf6679;
-            --success: #03dac6;
-            --border: #111;
-            --warning: #ffb74d;
-        }
-        
+:root {
+    --bg-dark: #0a0711; /* بقي كما هو */
+    --card-bg: #0b0b0b; /* قريب من الأسود لكن أفتح بنسبة 1.618 */
+    
+    --primary: #bb86fc; /* الأصل */
+    --primary-dark: #9768cc; /* أغمق بنسبة ذهبية تقريباً */
+    --primary-darker: #3b2555; /* أغمق بشكل أعمق مع إضافة أزرق نسبة ذهبية */
+
+    --text: #f2f2f2; /* تفتيح بنسبة ذهبية من الأصل */
+    --text-secondary: #999999; /* خفض الإضاءة بنسبة ذهبية من اللون الأساسي */
+
+    --danger: #c1445d; /* خفض التشبع والإضاءة بنسبة ذهبية من الأحمر */
+    --success: #2ee4d2; /* زيادة تشبع الفيروزي بنسبة ذهبية */
+    --warning: #ff9f2a; /* خفض التشبع بنسبة ذهبية من البرتقالي */
+
+    --border: #1a1a1a; /* أفتح قليلاً من #111 بنسبة ذهبية */
+}
         * {
             margin: 0;
             padding: 0;
@@ -88,7 +91,7 @@
         select {
             width: 100%;
             padding: 14px;
-            background-color: #2d2d2d;
+            background-color: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 8px;
             color: var(--text);
