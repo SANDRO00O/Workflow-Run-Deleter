@@ -1,19 +1,16 @@
 :root {
-    --bg-dark: #0a0711; /* بقي كما هو */
-    --card-bg: #0b0b0b; /* قريب من الأسود لكن أفتح بنسبة 1.618 */
-    
-    --primary: #bb86fc; /* الأصل */
-    --primary-dark: #9768cc; /* أغمق بنسبة ذهبية تقريباً */
-    --primary-darker: #3b2555; /* أغمق بشكل أعمق مع إضافة أزرق نسبة ذهبية */
-
-    --text: #f2f2f2; /* تفتيح بنسبة ذهبية من الأصل */
-    --text-secondary: #999999; /* خفض الإضاءة بنسبة ذهبية من اللون الأساسي */
-
-    --danger: #c1445d; /* خفض التشبع والإضاءة بنسبة ذهبية من الأحمر */
-    --success: #2ee4d2; /* زيادة تشبع الفيروزي بنسبة ذهبية */
-    --warning: #ff9f2a; /* خفض التشبع بنسبة ذهبية من البرتقالي */
-
-    --border: #1a1a1a; /* أفتح قليلاً من #111 بنسبة ذهبية */
+    --bg-dark: #0A0711; 
+    --secondary-bg: rgba(285.0187, 134, 252, 1);
+    --card-bg: #0b0b0b;
+    --primary: #bb86fc;
+    --primary-dark: #9768cc; 
+    --primary-darker: #3b2555;
+    --text: #f2f2f2;
+    --text-secondary: #999999;
+    --danger: #c1445d;
+    --success: #2ee4d2; 
+    --warning: #ff9f2a;
+    --border: rgba(47, 47, 47, 1);
 }
         * {
             margin: 0;
@@ -54,7 +51,7 @@
         
         .subtitle {
             color: var(--text-secondary);
-            font-size: 1.1rem;
+            font-size: calc(2.5rem / 2 / 1.618);
         }
         
         .card {
@@ -102,6 +99,10 @@
         input:focus {
             outline: none;
             border-color: var(--primary);
+        }
+        
+        code{
+            font-family: monospace;
         }
         
         .btn {
@@ -275,6 +276,7 @@
             border-top: 1px solid var(--primary-dark);
             font-size: 0.9rem;
             font-size: calc(0.8rem / 1.618);
+            color: var(--secondary-bg);
         }
         
         .footer .onep {
