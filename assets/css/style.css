@@ -109,8 +109,21 @@ code {
     font-family: monospace;
 }
 
+.buttons {
+    display: flex;
+    width: 100%;
+    gap: 4px;
+    text-align: center;
+}
+
+#refresh {
+    font-size: 1.2rem;
+    text-align: center;
+}
+
 .btn {
-    padding: 14px 24px;
+    text-align: center;
+    padding: 0.9rem 1.3rem;
     border: none;
     border-radius: 8px;
     font-size: 1rem;
@@ -122,16 +135,15 @@ code {
     justify-content: center;
 }
 
-.btn i {
-    margin-right: 8px;
+.btn-primary i {
 }
 
-.btn-primary {
+.btn-primary, .btn-refresh {
     background-color: var(--primary);
     color: #121212;
 }
 
-.btn-primary:hover {
+.btn-primary:hover, .btn-refresh:hover {
     background-color: var(--primary-dark);
 }
 

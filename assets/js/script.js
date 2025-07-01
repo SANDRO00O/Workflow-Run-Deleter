@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const tokenInput = document.getElementById('token');
     const statusSelect = document.getElementById('status');
     const fetchBtn = document.getElementById('fetchBtn');
+    const refreshBtn = document.getElementById('refresh');
     const runsContainer = document.getElementById('runsContainer');
     const resultsContainer = document.getElementById('resultsContainer');
     const FailedContainer = document.getElementById('FailedContainer');
@@ -26,14 +27,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const confirmBtn = document.getElementById('confirmBtn');
     const progressContainer = document.getElementById('progressContainer');
     const backToSearchBtn = document.getElementById('backToSearchBtn');
-    
-    // ==== 2. تحميل القيم المحفوظة من localStorage ====
+
+    // ==== 2. إجعل زر الريفريش مخفي في البداية ====
+    let hasFetched = false;
+    refreshBtn.style.display = 'none';
+
+    // ==== 3. تحميل القيم المحفوظة من localStorage ====
     ownerInput.value = localStorage.getItem('owner') || '';
     repoInput.value = localStorage.getItem('repo') || '';
     tokenInput.value = localStorage.getItem('token') || '';
     statusSelect.value = localStorage.getItem('status') || 'all';
-    
-    // ==== 3. المصفوفة الخاصة برسائل التحميل الساخرة ====
+
+    // ==== 4. رصف الرسائل الساخرة ====
     const satiricalMessages = [
         "While you wait, politicians are busy creating new workflows in the background...",
         "This is taking longer than fulfilling a campaign promise!",
@@ -46,14 +51,14 @@ document.addEventListener('DOMContentLoaded', function() {
         "Our servers are working as hard as politicians during election season!",
         "This delay is sponsored by the Slow Internet Communications Committee."
     ];
-    
-    // ==== دوال المساعدة ====
+
+    // ==== 5. دوال مساعدة ====
     function toggleElement(id, show) {
         const el = document.getElementById(id);
         if (show) el.classList.remove('hidden');
         else el.classList.add('hidden');
     }
-    
+
     function showToast(message, type = 'info') {
         const toast = document.createElement('div');
         toast.className = `toast toast-${type}`;
@@ -70,13 +75,13 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => toast.remove(), 300);
         }, 5000);
     }
-    
+
     function showConfirm(title, message) {
         return new Promise(resolve => {
             modalTitle.textContent = title;
             modalBody.textContent = message;
             confirmModal.classList.add('show');
-            
+
             const cleanUp = () => {
                 confirmBtn.removeEventListener('click', onConfirm);
                 cancelBtn.removeEventListener('click', onCancel);
@@ -91,14 +96,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 confirmModal.classList.remove('show');
                 resolve(false);
             };
-            
+
             confirmBtn.addEventListener('click', onConfirm);
             cancelBtn.addEventListener('click', onCancel);
         });
     }
-    
+
     let satiricalTimeout;
-    
     function showSatiricalMessage() {
         clearTimeout(satiricalTimeout);
         satiricalTimeout = setTimeout(() => {
@@ -107,30 +111,29 @@ document.addEventListener('DOMContentLoaded', function() {
             satiricalMessage.style.display = 'block';
         }, 10000);
     }
-    
     function hideSatiricalMessage() {
         clearTimeout(satiricalTimeout);
         satiricalMessage.style.display = 'none';
     }
-    
-    // ==== 4. حدث النقر على زر Fetch ====
+
+    // ==== 6. حدث النقر على زر Fetch ====
     fetchBtn.addEventListener('click', async function() {
         const owner = ownerInput.value.trim();
         const repo = repoInput.value.trim();
         const token = tokenInput.value.trim();
-        
+
         if (!owner || !repo || !token) {
             showToast('Please fill all fields', 'error');
             return;
         }
-        
+
         // حفظ المدخلات
         localStorage.setItem('owner', owner);
         localStorage.setItem('repo', repo);
         localStorage.setItem('token', token);
         localStorage.setItem('status', statusSelect.value);
-        
-        // تعطيل الزر وتجهيز UI
+
+        // إعداد UI
         fetchBtn.disabled = true;
         toggleElement('successContainer', false);
         toggleElement('resultsContainer', false);
@@ -138,9 +141,9 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleElement('loadingIndicator', true);
         toggleElement('resultsList', false);
         fetchProgressBar.style.width = '0%';
-        
+
         showSatiricalMessage();
-        
+
         try {
             let progress = 0;
             const progressInterval = setInterval(() => {
@@ -148,13 +151,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 fetchProgressBar.style.width = `${progress}%`;
                 if (progress >= 100) clearInterval(progressInterval);
             }, 200);
-            
+
             const runs = await fetchWorkflowRuns(owner, repo, token);
-            
+
             clearInterval(progressInterval);
             fetchProgressBar.style.width = '100%';
             hideSatiricalMessage();
-            
+
             if (runs.length === 0) {
                 toggleElement('resultsContainer', true);
                 showToast('No workflow runs found for this repository', 'info');
@@ -179,45 +182,55 @@ document.addEventListener('DOMContentLoaded', function() {
         } finally {
             toggleElement('loadingIndicator', false);
             fetchBtn.disabled = false;
+            // Enable and show the refresh button
+            hasFetched = true;
+            refreshBtn.style.display = 'inline-block';
         }
     });
-    
-    // ==== 5. حدث النقر على زر Delete All ====
+
+    // ==== 7. حدث النقر على زر Refresh ====
+    refreshBtn.addEventListener('click', function() {
+        if (hasFetched && !fetchBtn.disabled) {
+            // إعادة تشغيل نفس عملية الفيتش
+            fetchBtn.click();
+        }
+    });
+
+    // ==== 8. حدث Delete All كما كان سابقاً ====
     deleteAllBtn.addEventListener('click', async function() {
         const owner = ownerInput.value.trim();
         const repo = repoInput.value.trim();
         const token = tokenInput.value.trim();
-        
+
         if (!owner || !repo || !token) {
             showToast('Please fill all fields', 'error');
             return;
         }
-        
-        // حفظ المدخلات
+
         localStorage.setItem('owner', owner);
         localStorage.setItem('repo', repo);
         localStorage.setItem('token', token);
         localStorage.setItem('status', statusSelect.value);
-        
+
         const runElements = runsContainer.querySelectorAll('.workflow-run');
         const runIds = Array.from(runElements).map(el => +el.dataset.id);
         if (runIds.length === 0) {
             showToast('No runs to delete', 'error');
             return;
         }
-        
+
         const confirmed = await showConfirm(
             'Confirm Deletion',
             `Are you sure you want to delete ${runIds.length} workflow runs?`
         );
         if (!confirmed) return;
-        
+
         deleteAllBtn.disabled = true;
         const originalText = deleteAllBtn.innerHTML;
         deleteAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Deleting...';
         toggleElement('progressContainer', true);
         progressBar.style.width = '0%';
-        
+
         let deletedCount = 0;
         for (const id of runIds) {
             try {
@@ -231,12 +244,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 showToast(`Failed to delete run #${id}: ${err.message}`, 'error');
             }
         }
-        
+
         runCount.textContent = '0';
         toggleElement('resultsList', false);
         toggleElement('successContainer', true);
         showToast(`Successfully deleted ${deletedCount} workflow runs`, 'success');
-        
+
         deleteAllBtn.disabled = false;
         deleteAllBtn.innerHTML = originalText;
         toggleElement('resultsContainer', false);
@@ -246,10 +259,8 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleElement('progressContainer', false);
         toggleElement('successContainer', true);
     });
-    
-    
-    
-    // ==== 6. دوال العمل مع GitHub API ====
+
+    // ==== بقية الدوال الخاصة بـ GitHub API وعرض النتائج كما كانت ====
     async function fetchWorkflowRuns(owner, repo, token) {
         const perPage = 100;
         let page = 1;
@@ -276,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         return allRuns;
     }
-    
+
     async function deleteWorkflowRun(owner, repo, token, runId) {
         const res = await fetch(
             `https://api.github.com/repos/${owner}/${repo}/actions/runs/${runId}`,
@@ -295,8 +306,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         return true;
     }
-    
-    // ==== 7. دالة عرض النتائج ====
+
     function displayRuns(runs) {
         runsContainer.innerHTML = '';
         runCount.textContent = runs.length;
@@ -304,7 +314,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const filtered = filter === 'all' ?
             runs :
             runs.filter(r => r.conclusion === filter);
-        
+
         if (!filtered.length) {
             runsContainer.innerHTML = `
                 <div class="empty-state">
@@ -315,7 +325,7 @@ document.addEventListener('DOMContentLoaded', function() {
             deleteAllBtn.disabled = true;
             return;
         }
-        
+
         deleteAllBtn.disabled = false;
         filtered.forEach(run => {
             const el = document.createElement('div');
@@ -353,7 +363,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </button>
                 </div>`;
             runsContainer.appendChild(el);
-            
+
             el.querySelector('.delete-btn').addEventListener('click', async function() {
                 const id = this.dataset.id;
                 const confirmed = await showConfirm(
@@ -362,10 +372,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 );
                 if (!confirmed) return;
                 try {
-                    await deleteWorkflowRun(ownerInput.value.trim(),
+                    await deleteWorkflowRun(
+                        ownerInput.value.trim(),
                         repoInput.value.trim(),
                         tokenInput.value.trim(),
-                        id);
+                        id
+                    );
                     el.remove();
                     runCount.textContent = parseInt(runCount.textContent) - 1;
                     showToast(`Run #${id} deleted`, 'success');

@@ -5,16 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GitHub Workflow Run Deleter</title>
-   <link rel="stylesheet" href="assets/css/all.css">
+    <link rel="stylesheet" href="assets/css/all.css">
     <link rel="stylesheet" href="assets/css/style.css?rev=3" type="text/css" media="all" />
 </head>
 
 <body>
     <div id="loading">
-    <div class="loader">
-        <i class="fas fa-circle-notch fa-spin"></i>
+        <div class="loader">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </div>
     </div>
-  </div>
     <!-- Toast notifications container -->
     <div class="toast-container" id="toastContainer"></div>
     
@@ -76,15 +76,19 @@
                     <option value="cancelled">Cancelled</option>
                 </select>
             </div>
-            
-            <button id="fetchBtn" class="btn btn-primary">
-                <i class="fas fa-cloud-download-alt"></i> Fetch Workflow Runs
-            </button>
-<div class="footer2">
-    <p><strong>Note:</strong> Deleted workflow runs cannot be recovered. Use with caution.</p>
-    <p>This tool runs entirely in your browser - your GitHub token never leaves your device, see <a href="https://github.com/SANDRO00O/workflow-run-deleter" rel="noopener">open source</a> for more information.</p>
-    <p><strong>Important:</strong> All your inputs and data are stored locally on your device only and are not shared with us or any third parties, except GitHub as part of the API usage.</p>
-</div>
+            <div class="buttons">
+                <button id="fetchBtn" class="btn btn-primary">
+                    <i class="fas fa-cloud-download-alt"></i> Fetch Workflow Runs
+                </button>
+                <button class="btn btn-refresh" id="refresh">
+                    <i class="fa fa-refresh"></i>
+                </button>
+            </div>
+            <div class="footer2">
+                <p><strong>Note:</strong> Deleted workflow runs cannot be recovered. Use with caution.</p>
+                <p>This tool runs entirely in your browser - your GitHub token never leaves your device, see <a href="https://github.com/SANDRO00O/workflow-run-deleter" rel="noopener">open source</a> for more information.</p>
+                <p><strong>Important:</strong> All your inputs and data are stored locally on your device only and are not shared with us or any third parties, except GitHub as part of the API usage.</p>
+            </div>
         </div>
         
         <div class="card">
@@ -162,16 +166,16 @@
     
     <script src="assets/js/script.js" type="text/javascript" charset="utf-8"></script>
     <script>
-    window.addEventListener('load', function() {
-      const loadingScreen = document.getElementById('loading');
-      setTimeout(() => {
-        loadingScreen.style.opacity = '0';
-        setTimeout(() => {
-          loadingScreen.style.display = 'none';
-        }, 500);
-      }, 1000);
-    });
-  </script>
+        window.addEventListener('load', function() {
+            const loadingScreen = document.getElementById('loading');
+            setTimeout(() => {
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            }, 1000);
+        });
+    </script>
 </body>
 
 </html>
