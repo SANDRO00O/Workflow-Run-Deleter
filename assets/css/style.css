@@ -35,7 +35,7 @@ body {
 .container {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 1rem;
+    padding: 8px;
     height: 100%;
 }
 
@@ -58,23 +58,22 @@ h1 {
 
 .card {
     background-color: var(--card-bg);
-    border-radius: 12px;
-    padding: 25px;
+    border-radius: 1.8rem;
+    padding: 1.8rem;
     margin-bottom: 25px;
     border: 1px solid var(--primary-dark);
 }
 
 .card-title {
+    font-size: 1.5rem;
     display: flex;
     align-items: center;
     margin-bottom: 20px;
     color: var(--primary);
+    gap: 8px;
 }
 
 .card-title i {
-    margin-right: 10px;
-    font-size: 1.5rem;
-    
 }
 
 .form-group {
@@ -123,9 +122,10 @@ code {
 
 .btn {
     text-align: center;
-    padding: 0.9rem 1.3rem;
+    min-height: 50px;
+    padding: 0.6rem 1.5rem;
     border: none;
-    border-radius: 8px;
+    border-radius: 50px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
@@ -133,6 +133,7 @@ code {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 8px;
 }
 
 .btn-primary i {
@@ -285,6 +286,7 @@ strong {
 .footer2 {
     background-color: #141014 !important;
     color: var(--secondary-bg);
+    margin-bottom: 1rem;
 }
 
 .footer,
@@ -474,25 +476,27 @@ a:hover {
     padding: 30px;
     width: 90%;
     max-width: 500px;
-    transform: translateY(-20px);
-    transition: transform 0.3s ease;
+    transform: scale(0.8);
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     border: 1px solid var(--danger);
+    
 }
 
 .modal-overlay.show .modal-dialog {
-    transform: translateY(0);
+    transform: scale(1);
 }
 
 .modal-header {
     margin-bottom: 20px;
     display: flex;
     align-items: center;
+    font-size: 1.8rem;
 }
 
 .modal-header i {
-    font-size: 1.8rem;
     margin-right: 15px;
     color: var(--danger);
+    margin-right: 15px;
 }
 
 .modal-title {
