@@ -35,7 +35,7 @@ body {
 .container {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 8px;
+    padding: 12px;
     height: 100%;
 }
 
@@ -84,7 +84,8 @@ label {
     display: block;
     margin-bottom: 8px;
     font-weight: 500;
-    color: whitesmoke;
+    color: #C5C5C5;
+    font-size: 1rem;
 }
 
 input,
@@ -104,8 +105,9 @@ input:focus {
     border-color: var(--primary);
 }
 
-code {
+small p2 {
     font-family: monospace;
+    font-size: 0.7rem;
 }
 
 .buttons {
@@ -592,4 +594,9 @@ a:hover {
     100% {
         transform: rotate(360deg);
     }
+}
+
+::selection{
+    color: #000;
+    background-color: var(--primary);
 }
